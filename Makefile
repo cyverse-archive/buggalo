@@ -33,7 +33,7 @@ LDLIBS   = $(LIBDIRS:%=-Wl,-rpath %) $(LIBDIRS:%=-L%) $(LIBS)
 .SUFFIXES:
 .SUFFIXES: .cpp .o
 
-.PHONY: all clean install
+.PHONY: all clean install tarball
 
 all: $(PROG)
 
@@ -41,8 +41,11 @@ buggalo: $(OBJECTS)
 	$(LD) -o $@ $(LDFLAGS) $(OBJECTS) $(LDLIBS)
 
 clean:
-	$(RM) $(OBJECTS) $(PROG)
+	$(RM) $(OBJECTS) $(PROG) $(PROG)*.tar.gz
 
 install: $(PROG)
 	$(MKDIR) $(BINDIR)
 	$(CP) $(PROG) $(BINDIR)
+
+tarball:
+	./buildtarball.sh buggalo.spec
