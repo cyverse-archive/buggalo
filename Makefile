@@ -2,6 +2,12 @@ SHELL = /bin/sh
 CXX   = g++
 LD    = g++
 RM    = rm -f
+MKDIR = mkdir -p
+CP    = cp -p
+
+# Installation directories.
+PREFIX ?= /usr/local
+BINDIR =  $(PREFIX)/bin
 
 # The operating system.
 OS = $(shell uname)
@@ -27,7 +33,7 @@ LDLIBS   = $(LIBDIRS:%=-Wl,-rpath %) $(LIBDIRS:%=-L%) $(LIBS)
 .SUFFIXES:
 .SUFFIXES: .cpp .o
 
-.PHONY: all clean
+.PHONY: all clean install
 
 all: $(PROG)
 
@@ -36,3 +42,7 @@ buggalo: $(OBJECTS)
 
 clean:
 	$(RM) $(OBJECTS) $(PROG)
+
+install: $(PROG)
+	$(MKDIR) $(BINDIR)
+	$(CP) $(PROG) $(BINDIR)
