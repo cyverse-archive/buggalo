@@ -24,6 +24,7 @@
         <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
             <word>cpp</word>
             <word>Newick</word>
+            <word>tre</word>
         </spellchecker-wordlist>
     </configuration>
 </project>

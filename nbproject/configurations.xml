@@ -4,6 +4,8 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>tree_info.h</itemPath>
+      <itemPath>tree_parser.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -13,9 +15,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>main.cpp</itemPath>
-      <itemPath>tree_info.h</itemPath>
       <itemPath>tree_parser.cpp</itemPath>
-      <itemPath>tree_parser.h</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -37,6 +37,13 @@
         <compilerSet>default</compilerSet>
       </toolsSet>
       <compileType>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerLibLibItem>boost_program_options-mt</linkerLibLibItem>
+            <linkerLibLibItem>ncl-2.1.18</linkerLibLibItem>
+          </linkerLibItems>
+          <commandLine>-L/usr/local/lib/ncl</commandLine>
+        </linkerTool>
       </compileType>
     </conf>
     <conf name="Release" type="1">

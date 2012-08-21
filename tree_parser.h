@@ -37,21 +37,21 @@ public:
     /**
      * Attempts to parse the contents of a tree file.
      * 
-     * @param contents the contents of the file.
+     * @param in the input stream to read the tree file from.
      */
-    void parse(string contents);
+    void parse(istream &in);
 
     /**
      * Gets the list of trees were extracted from the tree file.
      * 
      * @return the list of trees.
      */
-    vector<tree_info> *get_trees();
+    vector<tree_info> get_trees();
 
 private:
     MultiFormatReader _reader; /// Reads and parses the file contents.
     string _format; /// The expected tree file format.
-    vector<tree_info> *_trees; /// the list of trees in the file.
+    vector<tree_info> _trees; /// the list of trees in the file.
 
     /**
      * Loads all of the trees from the parsed file.
