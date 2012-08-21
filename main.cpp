@@ -89,7 +89,7 @@ static void describe_options() {
  */
 static bool is_valid_format(string &format) {
     vector<string> format_names = MultiFormatReader::getFormatNames();
-    for (int i = 0; i < format_names.size(); i++) {
+    for (unsigned i = 0; i < format_names.size(); i++) {
         if (format_names[i] == format) {
             return true;
         }
@@ -102,7 +102,7 @@ static bool is_valid_format(string &format) {
  */
 static void display_valid_formats() {
     vector<string> format_names = MultiFormatReader::getFormatNames();
-    for (int i = 0; i < format_names.size(); i++) {
+    for (unsigned i = 0; i < format_names.size(); i++) {
         cerr << "\t" << format_names[i] << endl;
     }
 }
@@ -116,7 +116,7 @@ static void extract_trees(string &format, string &prefix) {
     tree_parser parser(format);
     parse_input(parser);
     vector<tree_info> trees = parser.get_trees();
-    for (int i = 0; i < trees.size(); i++) {
+    for (unsigned i = 0; i < trees.size(); i++) {
         tree_info tree = trees[i];
         string name = tree.get_name();
         if (name.length() == 0) {

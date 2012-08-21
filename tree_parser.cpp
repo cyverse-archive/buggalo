@@ -6,7 +6,8 @@
 
 using namespace std;
 
-tree_parser::tree_parser(string format) : _format(format), _reader(-1), _trees(), _trees_loaded(false) {
+tree_parser::tree_parser(string format) : _reader(-1), _trees(),  _trees_loaded(false) {
+    _format = format;
 
     // Tell the reader not to throw an exception unless a fatal error occurs.
     _reader.SetWarningToErrorThreshold(NxsReader::FATAL_WARNING);
