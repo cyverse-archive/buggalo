@@ -50,8 +50,9 @@ public:
 
 private:
     MultiFormatReader _reader; /// Reads and parses the file contents.
-    string _format; /// The expected tree file format.
+    string _format; /// the expected tree file format.
     vector<tree_info> _trees; /// the list of trees in the file.
+    bool _trees_loaded; /// true if the trees have been loaded from the file.
 
     /**
      * Loads all of the trees from the parsed file.

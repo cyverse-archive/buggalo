@@ -6,7 +6,7 @@
 
 using namespace std;
 
-tree_parser::tree_parser(string format) : _format(format), _reader(-1), _trees() {
+tree_parser::tree_parser(string format) : _format(format), _reader(-1), _trees(), _trees_loaded(false) {
 
     // Tell the reader not to throw an exception unless a fatal error occurs.
     _reader.SetWarningToErrorThreshold(NxsReader::FATAL_WARNING);
@@ -32,11 +32,14 @@ tree_parser::~tree_parser() {
 
 void tree_parser::parse(istream &in) {
     _reader.ReadStream(in, _format.c_str());
+    _trees.clear();
+    _trees_loaded = false;
 }
 
 vector<tree_info> tree_parser::get_trees() {
-    if (_trees.size() == 0) {
+    if (!_trees_loaded) {
         load_all_trees();
+        _trees_loaded = true;
     }
     return _trees;
 }
