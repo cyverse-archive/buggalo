@@ -28,4 +28,4 @@ cp $RPMBASE/RPMS/$ARCH/$RPM .
 rm $RPMBASE/RPMS/$ARCH/$RPM
 
 # Add the RPM to our YUM repository.
-/home/tomcat/push.sh $RPM
+/home/tomcat/push.sh $(pwd)/$RPM
