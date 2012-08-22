@@ -4,3 +4,4 @@
 buggalo
 *.cache
 *.log
+/nbproject
