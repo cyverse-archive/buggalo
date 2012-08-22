@@ -10,7 +10,7 @@ ARCH=${ARCH:-$(rpm --eval %_target_cpu)}
 NAME=$BASE-$VERSION
 BUILD=build/$NAME
 TARBALL=$NAME.tar.gz
-RPM=$NAME-$RELEASE-$ARCH.rpm
+RPM=$NAME-$RELEASE.$ARCH.rpm
 
 # Build the tarball.
 mkdir -p $BUILD
