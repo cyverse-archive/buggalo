@@ -12,7 +12,7 @@ BuildRequires: gcc
 Requires: boost >= 1.33.1-15
 Requires: iplant-ncl >= 2.1.18-1
 
-Source0: buggalo.tar.gz
+Source0: buggalo-0.0.1.tar.gz
 
 %description
 A simple command-line utility for extracting phylogenetic trees from files.
@@ -22,6 +22,9 @@ A simple command-line utility for extracting phylogenetic trees from files.
 
 %build
 PREFIX=$RPM_BUILD_ROOT/usr/local make install
+
+%clean
+rm -rf $RPM_BUILD_ROOT
 
 %files
 /usr/local/bin/buggalo
