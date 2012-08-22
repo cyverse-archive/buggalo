@@ -24,8 +24,8 @@ cp -p $TARBALL $RPMBASE/SOURCES/
 rpmbuild -ba $RPMBASE/SPECS/$SPEC
 
 # Copy the RPM back to the current working directory.
-cp $RPMBASE/RPMS/$RPM .
-rm $RPMBASE/RPMS/$RPM
+cp $RPMBASE/RPMS/$ARCH/$RPM .
+rm $RPMBASE/RPMS/$ARCH/$RPM
 
 # Add the RPM to our YUM repository.
 /home/tomcat/push.sh $RPM
