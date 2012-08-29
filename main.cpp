@@ -29,7 +29,7 @@ static bool is_valid_format(string &format);
 static void display_valid_formats();
 static void extract_trees(string &format, string &prefix);
 static void parse_input(tree_parser &parser);
-static void spit(const string &contents, const string &filename);
+static void spit_newick(const string &contents, const string &filename);
 
 /**
  * Attempts to parse the standard input as a trees file.  The format is specified using the -f command-line option.
@@ -108,6 +108,15 @@ static void display_valid_formats() {
 }
 
 /**
+ * An exception that can be thrown when no trees are found in a file.
+ */
+class no_trees_exception: public exception {
+    virtual const char *what() const throw() {
+        return "the file was parsed successfully, but no trees were found";
+    }
+} no_trees;
+
+/**
  * Extracts trees from the input passed to us in the standard input stream.
  * 
  * @param format the 
@@ -116,26 +125,29 @@ static void extract_trees(string &format, string &prefix) {
     tree_parser parser(format);
     parse_input(parser);
     vector<tree_info> trees = parser.get_trees();
+    if (trees.size() == 0) {
+        throw no_trees;
+    }
     for (unsigned i = 0; i < trees.size(); i++) {
         tree_info tree = trees[i];
         string name = tree.get_name();
         if (name.length() == 0) {
             name = prefix + "_" + boost::lexical_cast<string>(i);
         }
-        spit(tree.get_newick(), name + ".tre");
+        spit_newick(tree.get_newick(), name + ".tre");
     }
 }
 
 /**
- * Writes a string to a file.
+ * Writes a string to a file, appending a semicolon to the end of the string.
  * 
  * @param contents the contents of the file.
  * @param filename the name of the file.
  */
-static void spit(const string &contents, const string &filename) {
+static void spit_newick(const string &contents, const string &filename) {
     ofstream out;
     out.open(filename.c_str());
-    out << contents;
+    out << contents << ";";
     out.close();
 }
 
