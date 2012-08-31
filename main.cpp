@@ -27,8 +27,8 @@ static void describe_options();
 static po::options_description desc("Allowed options");
 static bool is_valid_format(string &format);
 static void display_valid_formats();
-static void extract_trees(string &format, string &prefix);
-static void parse_input(tree_parser &parser);
+static void extract_trees(string &input, string &format, string &prefix);
+static void parse_input(string &input, tree_parser &parser);
 static void spit_newick(const string &contents, const string &filename);
 
 /**
@@ -42,11 +42,19 @@ int main(int argc, char** argv) {
     po::store(po::parse_command_line(argc, argv, desc), vm);
     po::notify(vm);
 
-    // Perform the requested action.
+    // Display the help and exit if help was requested.
     if (vm.count("help")) {
         cout << desc << endl;
         return 0;
     }
+
+    // Validate the input file.
+    if (!vm.count("input")) {
+        cerr << "required option, --input, missing" <<endl;
+        cerr << desc << endl;
+        return 1;
+    }
+    string input = vm["input"].as<string>();
 
     // Validate the requested input format.
     if (!vm.count("format")) {
@@ -65,7 +73,7 @@ int main(int argc, char** argv) {
     string prefix = vm.count("prefix") ? vm["prefix"].as<string>() : "tree";
 
     // Attempt to extract trees from the data passed to us in the standard input stream.
-    extract_trees(format, prefix);
+    extract_trees(input, format, prefix);
 
     return 0;
 }
@@ -76,6 +84,7 @@ int main(int argc, char** argv) {
 static void describe_options() {
     desc.add_options()
             ("help,h", "display the help message")
+            ("input,i", po::value<string> (), "specify the path to the input file")
             ("format,f", po::value<string> (), "specify the format of the input data")
             ("prefix,p", po::value<string> (), "the prefix to use for tree names")
             ;
@@ -119,11 +128,13 @@ class no_trees_exception: public exception {
 /**
  * Extracts trees from the input passed to us in the standard input stream.
  * 
- * @param format the 
+ * @param input the path to the input file.
+ * @param format the expected format of the input file.
+ * @param prefix the prefix to use for trees.
  */
-static void extract_trees(string &format, string &prefix) {
+static void extract_trees(string &input, string &format, string &prefix) {
     tree_parser parser(format);
-    parse_input(parser);
+    parse_input(input, parser);
     vector<tree_info> trees = parser.get_trees();
     if (trees.size() == 0) {
         throw no_trees;
@@ -154,11 +165,13 @@ static void spit_newick(const string &contents, const string &filename) {
 /**
  * Parses the input passed to us in the standard input stream.
  * 
+ * @param input the path to the input file.
  * @param parser the tree parser.
  */
-static void parse_input(tree_parser &parser) {
+static void parse_input(string &input, tree_parser &parser) {
     try {
-        parser.parse(cin);
+        ifstream in(input.c_str());
+        parser.parse(in);
     }
     catch (NxsException e) {
         cerr << e.nxs_what() << endl;
