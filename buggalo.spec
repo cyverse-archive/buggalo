@@ -1,7 +1,7 @@
 Summary: A simple command-line utility for extracting phylogenetic trees from files.
 Name: buggalo
 Version: 0.0.1
-Release: 2
+Release: 3
 Epoch: 0
 Group: Applications/System
 BuildRoot: %{_tmppath}/%{name}/%{version}-buildroot
