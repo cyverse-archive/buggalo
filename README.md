@@ -40,6 +40,10 @@ actual tree name will be used as the base file name.
 If this argument is not specified on the command line, the file name prefix
 defaults to `tree`.
 
+## --help -h
+
+Displays a brief help message and exits.
+
 # Description
 
 Buggalo is a simple command-line utility for extracting phylogenetic trees
